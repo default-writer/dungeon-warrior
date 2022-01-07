@@ -111,8 +111,9 @@ class Game(IGameState):
                 mouse_pos = pygame.mouse.get_pos()
                 if mouse_pos != gs.mouse_pos:
                     gs.mouse_pos = mouse_pos
-                    gs.dirty = True
                     gs.debug = f"{(gs.mouse_pos[0], gs.mouse_pos[1])}"
+                    gs.dirty = True
+
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
                 gs.key = key

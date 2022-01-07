@@ -29,6 +29,7 @@ class IGameState:
         self.debug: str = ""
         self.counter: int = 0
         self.dirty: bool = True
+        self.event: pygame.event = None
 
 
 class Game(IGameState):
@@ -53,7 +54,7 @@ class Game(IGameState):
     def init(self) -> None:
         pygame.display.set_caption(self.caption)
         pygame.display.set_icon(self.icon)
-        self.screen = pygame.display.set_mode(self.size, flags=pygame.SCALED | pygame.RESIZABLE, vsync=1)
+        self.screen = pygame.display.set_mode(self.size, vsync=1)
         self.clock = pygame.time.Clock()
         self.date = datetime.fromtimestamp(self.ticks / 1000).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         self.text_surface = self.font.render(self.date, False, (0, 0, 0))
@@ -133,6 +134,8 @@ class Game(IGameState):
                     gs.counter = gs.counter + 1
                     gs.debug = f"DOWN{gs.counter}"
                     gs.dirty = True
+
+            gs.event = event
 
         return GameStates.DRAW
 

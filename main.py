@@ -78,7 +78,6 @@ class Game(IGameState):
             
             self.clock.tick(self.FPS)
             pygame.display.flip()
-            self.dirty = False
 
     def text_objects(self, text, font):
         self.text_surface = font.render(text, True, (255, 255, 255))

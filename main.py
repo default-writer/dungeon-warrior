@@ -28,7 +28,6 @@ class IGameState:
         self.key = None
         self.debug: str = ""
         self.counter: int = 0
-        self.dirty: bool = True
         self.event: pygame.event = None
 
 
@@ -49,12 +48,12 @@ class Game(IGameState):
         self.text_surface = None
         self.date = datetime.fromtimestamp(self.ticks / 1000).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         self.icon = pygame.image.load(os.path.join("images", "dungeon.png"))
-        self.font = pygame.font.Font(os.path.join("fonts", "pt-mono.ttf"), 64)
+        self.font = pygame.font.Font(os.path.join("fonts", "pt-mono.ttf"), 16)
 
     def init(self) -> None:
         pygame.display.set_caption(self.caption)
         pygame.display.set_icon(self.icon)
-        self.screen = pygame.display.set_mode(self.size, vsync=1)
+        self.screen = pygame.display.set_mode(self.size, flags=pygame.NOFRAME, vsync=1)
         self.clock = pygame.time.Clock()
         self.date = datetime.fromtimestamp(self.ticks / 1000).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         self.text_surface = self.font.render(self.date, False, (0, 0, 0))
@@ -74,11 +73,12 @@ class Game(IGameState):
                 self.init()
             if state == GameStates.DRAW:
                 self.paint()
-            if self.dirty:
-                self.update()
-                self.clock.tick(self.FPS)
-                pygame.display.flip()
-                self.dirty = False
+
+            self.update()
+            
+            self.clock.tick(self.FPS)
+            pygame.display.flip()
+            self.dirty = False
 
     def text_objects(self, text, font):
         self.text_surface = font.render(text, True, (255, 255, 255))
@@ -113,7 +113,12 @@ class Game(IGameState):
                 if mouse_pos != gs.mouse_pos:
                     gs.mouse_pos = mouse_pos
                     gs.debug = f"{(gs.mouse_pos[0], gs.mouse_pos[1])}"
-                    gs.dirty = True
+
+            if event.type == pygame.MOUSEMOTION:
+                mouse_pos = pygame.mouse.get_pos()
+                if mouse_pos != gs.mouse_pos:
+                    gs.mouse_pos = mouse_pos
+                    gs.debug = f"{(gs.mouse_pos[0], gs.mouse_pos[1])}"
 
             if event.type == pygame.KEYDOWN:
                 key = pygame.key.get_pressed()
@@ -121,19 +126,19 @@ class Game(IGameState):
                 if key[pygame.K_UP]:
                     gs.counter = gs.counter + 1
                     gs.debug = f"UP{gs.counter}"
-                    gs.dirty = True
+
                 if key[pygame.K_LEFT]:
                     gs.counter = gs.counter + 1
                     gs.debug = f"LEFT{gs.counter}"
-                    gs.dirty = True
+
                 if key[pygame.K_RIGHT]:
                     gs.counter = gs.counter + 1
                     gs.debug = f"RIGHT{gs.counter}"
-                    gs.dirty = True
+
                 if key[pygame.K_DOWN]:
                     gs.counter = gs.counter + 1
                     gs.debug = f"DOWN{gs.counter}"
-                    gs.dirty = True
+
 
             gs.event = event
 

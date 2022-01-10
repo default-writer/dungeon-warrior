@@ -22,13 +22,48 @@ class GameStates:
     QUIT = 4
 
 
+date_format = "%Y-%m-%d %H:%M:%S.%f"
+
 class IGameState:
     def __init__(self):
         self.mouse_pos: tuple[int, int] = (0, 0)
         self.key = None
         self.debug: str = ""
         self.counter: int = 0
-        self.event: pygame.event = None
+
+
+class IGameEventProcessor:
+    def process(self):
+        '''interface-only function'''
+        pass
+        
+
+class MainScreenKeyboardProcessor(IGameEventProcessor):
+    def __init__(self, game: IGameState):
+        self.game = game
+        
+    def process(self):
+        keys = pygame.key.get_pressed()
+        # for event in pygame.event.get():
+        #     if event.type == pygame.KEYDOWN:
+        if keys[pygame.K_UP]:
+            self.game.counter = self.game.counter + 1
+            self.game.debug = f"UP{self.game.counter}"
+
+        if keys[pygame.K_LEFT]:
+            self.game.counter = self.game.counter + 1
+            self.game.debug = f"LEFT{self.game.counter}"
+
+        if keys[pygame.K_RIGHT]:
+            self.game.counter = self.game.counter + 1
+            self.game.debug = f"RIGHT{self.game.counter}"
+
+        if keys[pygame.K_DOWN]:
+            self.game.counter = self.game.counter + 1
+            self.game.debug = f"DOWN{self.game.counter}"
+
+        if keys[pygame.K_q]:
+            self.game.run = False
 
 
 class Game(IGameState):
@@ -46,9 +81,11 @@ class Game(IGameState):
         self.screen = None
         self.clock = None
         self.text_surface = None
-        self.date = datetime.fromtimestamp(self.ticks / 1000).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+        self.date = datetime.fromtimestamp(self.ticks / 1000).strftime(date_format)[:-3]
         self.icon = pygame.image.load(os.path.join("images", "dungeon.png"))
         self.font = pygame.font.Font(os.path.join("fonts", "pt-mono.ttf"), 16)
+        self.keyboard_processor = MainScreenKeyboardProcessor(self)
+        self.run = False
 
     def init(self) -> None:
         pygame.display.set_caption(self.caption)
@@ -57,6 +94,8 @@ class Game(IGameState):
         self.clock = pygame.time.Clock()
         self.date = datetime.fromtimestamp(self.ticks / 1000).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         self.text_surface = self.font.render(self.date, False, (0, 0, 0))
+        self.state = GameStates.DRAW
+        self.run = True
         print("Game started!")
 
     def quit(self) -> None:
@@ -65,15 +104,26 @@ class Game(IGameState):
         pygame.quit()
 
     def draw(self) -> None:
-        while True:
-            state: int = Game.event_loop(self)
-            if state == GameStates.QUIT:
-                return
-            if state == GameStates.INIT:
-                self.init()
-            if state == GameStates.DRAW:
-                self.paint()
+        while self.run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.run = False
 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+                    if mouse_pos != self.mouse_pos:
+                        self.mouse_pos = mouse_pos
+                        self.debug = f"{(self.mouse_pos[0], self.mouse_pos[1])}"
+
+                if event.type == pygame.MOUSEMOTION:
+                    mouse_pos = pygame.mouse.get_pos()
+                    if mouse_pos != self.mouse_pos:
+                        self.mouse_pos = mouse_pos
+                        self.debug = f"{(self.mouse_pos[0], self.mouse_pos[1])}"
+                        
+            self.keyboard_processor.process()
+
+            self.paint()
             self.update()
             
             self.clock.tick(self.FPS)
@@ -100,48 +150,6 @@ class Game(IGameState):
     @staticmethod
     def ticks_ms() -> int:
         return int(round(time.time() * 1000))
-
-    @staticmethod
-    def event_loop(gs: IGameState) -> int:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return GameStates.QUIT
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if mouse_pos != gs.mouse_pos:
-                    gs.mouse_pos = mouse_pos
-                    gs.debug = f"{(gs.mouse_pos[0], gs.mouse_pos[1])}"
-
-            if event.type == pygame.MOUSEMOTION:
-                mouse_pos = pygame.mouse.get_pos()
-                if mouse_pos != gs.mouse_pos:
-                    gs.mouse_pos = mouse_pos
-                    gs.debug = f"{(gs.mouse_pos[0], gs.mouse_pos[1])}"
-
-            if event.type == pygame.KEYDOWN:
-                key = pygame.key.get_pressed()
-                gs.key = key
-                if key[pygame.K_UP]:
-                    gs.counter = gs.counter + 1
-                    gs.debug = f"UP{gs.counter}"
-
-                if key[pygame.K_LEFT]:
-                    gs.counter = gs.counter + 1
-                    gs.debug = f"LEFT{gs.counter}"
-
-                if key[pygame.K_RIGHT]:
-                    gs.counter = gs.counter + 1
-                    gs.debug = f"RIGHT{gs.counter}"
-
-                if key[pygame.K_DOWN]:
-                    gs.counter = gs.counter + 1
-                    gs.debug = f"DOWN{gs.counter}"
-
-
-            gs.event = event
-
-        return GameStates.DRAW
 
 
 @decorator_factory(debug=True)

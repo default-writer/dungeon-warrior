@@ -44,8 +44,6 @@ class MainScreenKeyboardProcessor(IGameEventProcessor):
         
     def process(self):
         keys = pygame.key.get_pressed()
-        # for event in pygame.event.get():
-        #     if event.type == pygame.KEYDOWN:
         if keys[pygame.K_UP]:
             self.game.counter = self.game.counter + 1
             self.game.debug = f"UP{self.game.counter}"

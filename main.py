@@ -103,21 +103,20 @@ class Game:
     font = pygame.font.Font(os.path.join("fonts", "pt-mono.ttf"), 64)
 
     def __init__(self, size: tuple[int, int] = (1920, 1080)):
-        pygame.display.set_caption(Game.caption)
-        pygame.display.set_icon(Game.icon)
-        self.clock = pygame.time.Clock()
         self.mouse_processor = MainScreenMouseProcessor()
         self.keyboard_processor = MainScreenKeyboardProcessor()
         self.debug_processor = MainScreenDebugProcessor()
         self.painter = Painter(size)
 
-
     def init(self) -> None:
+        pygame.display.set_caption(Game.caption)
+        pygame.display.set_icon(Game.icon)
+        self.clock = pygame.time.Clock()
         print("Game started!")
 
     def quit(self) -> None:
-        print("Game exited!")
         pygame.quit()
+        print("Game exited!")
 
     def draw(self) -> None:
         while True:

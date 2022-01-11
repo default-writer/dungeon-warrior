@@ -82,7 +82,7 @@ class MainScreenKeyboardProcessor(IGameEventProcessor):
 
 class MainScreenDateTimeProcessor(IGameEventProcessor):
     def process(self):
-        DateTime.date = f"{datetime.fromtimestamp(Game.ticks_ms() / 1000).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}"
+        DateTime.date = f"{datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}"
 
 
 class MainScreenDebugProcessor(IGameEventProcessor):
@@ -150,10 +150,6 @@ class Game(ISurface):
             self.clock.tick(Game.fps)
 
             pygame.display.flip()
-
-    @staticmethod
-    def ticks_ms() -> int:
-        return int(round(time.time() * 1000))
 
 
 @decorator_factory(debug=True)

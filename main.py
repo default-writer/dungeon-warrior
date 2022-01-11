@@ -26,7 +26,6 @@ date_format = "%Y-%m-%d %H:%M:%S.%f"
 
 class IGameState:
     def __init__(self):
-        self.mouse_pos: tuple[int, int] = (0, 0)
         self.key = None
         self.debug: str = ""
         self.counter: int = 0
@@ -36,32 +35,43 @@ class IGameEventProcessor:
     def process(self):
         '''interface-only function'''
         pass
-        
+
+
+class Mouse:
+    position: tuple[int, int] = (0, 0)
+    button_down: bool = False
+
+
+class Keyboard:
+    key: str = ""
+
+
+class MainScreenMouseProcessor(IGameEventProcessor):
+    def process(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if Mouse.position != mouse_pos:
+            Mouse.position = mouse_pos
+
 
 class MainScreenKeyboardProcessor(IGameEventProcessor):
-    def __init__(self, game: IGameState):
-        self.game = game
-        
     def process(self):
+        Keyboard.key = ""
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            self.game.counter = self.game.counter + 1
-            self.game.debug = f"UP{self.game.counter}"
+            Keyboard.key = f"UP"
 
         if keys[pygame.K_LEFT]:
-            self.game.counter = self.game.counter + 1
-            self.game.debug = f"LEFT{self.game.counter}"
+            Keyboard.key = f"LEFT"
 
         if keys[pygame.K_RIGHT]:
-            self.game.counter = self.game.counter + 1
-            self.game.debug = f"RIGHT{self.game.counter}"
+            Keyboard.key = f"RIGHT"
 
         if keys[pygame.K_DOWN]:
-            self.game.counter = self.game.counter + 1
-            self.game.debug = f"DOWN{self.game.counter}"
+            Keyboard.key = f"DOWN"
 
         if keys[pygame.K_q]:
-            self.game.run = False
+            Keyboard.key = "Q"
 
 
 class Game(IGameState):
@@ -82,7 +92,8 @@ class Game(IGameState):
         self.date = datetime.fromtimestamp(self.ticks / 1000).strftime(date_format)[:-3]
         self.icon = pygame.image.load(os.path.join("images", "dungeon.png"))
         self.font = pygame.font.Font(os.path.join("fonts", "pt-mono.ttf"), 16)
-        self.keyboard_processor = MainScreenKeyboardProcessor(self)
+        self.mouse_processor = MainScreenMouseProcessor()
+        self.keyboard_processor = MainScreenKeyboardProcessor()
         self.run = False
 
     def init(self) -> None:
@@ -104,22 +115,17 @@ class Game(IGameState):
     def draw(self) -> None:
         while self.run:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT or Keyboard.key == "Q":
                     self.run = False
-
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    mouse_pos = pygame.mouse.get_pos()
-                    if mouse_pos != self.mouse_pos:
-                        self.mouse_pos = mouse_pos
-                        self.debug = f"{(self.mouse_pos[0], self.mouse_pos[1])}"
+                    Mouse.button_down = True
+                if event.type == pygame.MOUSEBUTTONUP:
+                    Mouse.button_down = False
 
-                if event.type == pygame.MOUSEMOTION:
-                    mouse_pos = pygame.mouse.get_pos()
-                    if mouse_pos != self.mouse_pos:
-                        self.mouse_pos = mouse_pos
-                        self.debug = f"{(self.mouse_pos[0], self.mouse_pos[1])}"
-                        
+
             self.keyboard_processor.process()
+            self.mouse_processor.process()
+            self.debug = f"{(Mouse.position[0], Mouse.position[1])} {'DOWN' if Mouse.button_down else ''} {Keyboard.key}"
 
             self.paint()
             self.update()

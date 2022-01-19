@@ -1,8 +1,9 @@
 import os.path
 import time
 from datetime import datetime
-import pygame
 
+import pygame
+from pygame.event import Event
 
 pygame.init()
 pygame.font.init()
@@ -53,11 +54,14 @@ class DateTime:
 
 
 class MainScreenMouseProcessor(IGameEventProcessor):
-    def process(self):
+    def process(self, event: Event = None):
         mouse_pos = pygame.mouse.get_pos()
-        if Mouse.position != mouse_pos:
-            Mouse.position = mouse_pos
-
+        Mouse.position = mouse_pos
+        if event:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                Mouse.button_down = True
+            if event.type == pygame.MOUSEBUTTONUP:
+                Mouse.button_down = False
 
 class MainScreenKeyboardProcessor(IGameEventProcessor):
     def process(self):
@@ -137,10 +141,7 @@ class Game(ISurface):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or Keyboard.key == "Q":
                     return
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    Mouse.button_down = True
-                if event.type == pygame.MOUSEBUTTONUP:
-                    Mouse.button_down = False
+                self.mouse_processor.process(event)
 
             self.keyboard_processor.process()
             self.mouse_processor.process()

@@ -9,7 +9,7 @@ pygame.init()
 pygame.font.init()
 
 
-def decorator_factory(debug=False):
+def debugger(debug=False):
     def decorator(function):
         def wrapper(*args, **kwargs):
             try:
@@ -154,7 +154,7 @@ class Game(ISurface):
             pygame.display.flip()
 
 
-@decorator_factory(debug=True)
+@debugger()
 def main():
     game: Game = Game()
     game.init()

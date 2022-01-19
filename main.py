@@ -55,13 +55,15 @@ class DateTime:
 
 class MainScreenMouseProcessor(IGameEventProcessor):
     def process(self, event: Event = None):
-        mouse_pos = pygame.mouse.get_pos()
-        Mouse.position = mouse_pos
         if event:
+            if event.type == pygame.MOUSEMOTION:
+                mouse_pos = pygame.mouse.get_pos()
+                Mouse.position = mouse_pos
             if event.type == pygame.MOUSEBUTTONDOWN:
                 Mouse.button_down = True
             if event.type == pygame.MOUSEBUTTONUP:
                 Mouse.button_down = False
+
 
 class MainScreenKeyboardProcessor(IGameEventProcessor):
     def process(self):
@@ -144,7 +146,6 @@ class Game(ISurface):
                 self.mouse_processor.process(event)
 
             self.keyboard_processor.process()
-            self.mouse_processor.process()
             self.datetime_processor.process()
             self.debug_processor.process()
             self.painter.paint(self)

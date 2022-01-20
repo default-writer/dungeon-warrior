@@ -1,6 +1,5 @@
 import os
 import pygame
-import logging
 from typing import List
 
 from core.interfaces import IGameProcessor, IGameEventProcessor
@@ -8,8 +7,6 @@ from core.KeyboardProcessor import Keyboard
 from core.TextPainter import TextPainter
 from core.DebugProcessor import Debug
 from core.Utils import debugger
-
-logger = logging.getLogger(__name__)
 
 
 pygame.init()

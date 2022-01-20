@@ -1,5 +1,3 @@
-import logging
-
 from core.DateTimeProcessor import DateTimeProcessor
 from core.DebugProcessor import DebugProcessor
 from core.Game import Game

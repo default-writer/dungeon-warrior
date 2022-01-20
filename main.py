@@ -1,19 +1,21 @@
 from core.DateTimeProcessor import DateTimeProcessor
 from core.DebugProcessor import DebugProcessor
 from core.Game import Game
-from core.MouseProcessor import MouseProcessor, Mouse
-from core.KeyboardProcessor import KeyboardProcessor, Keyboard
+from core.MouseProcessor import MouseProcessor
+from core.KeyboardProcessor import KeyboardProcessor
 from core.Utils import debugger
 
 
 processors = [
     DateTimeProcessor(),
-    DebugProcessor()]
+    DebugProcessor()
+    ]
 
 
 event_processors = [
     KeyboardProcessor(),
-    MouseProcessor()]
+    MouseProcessor()
+    ]
 
 
 @debugger()

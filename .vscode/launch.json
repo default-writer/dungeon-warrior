@@ -10,13 +10,6 @@
             "request": "launch",
             "module": "main",
             "python": "${command:python.interpreterPath}"
-        },
-        {
-            "name": "Python: Current File",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
         }
     ]
 }

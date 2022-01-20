@@ -21,7 +21,6 @@ def main():
     game: Game = Game(
         processors=processors,
         event_processors=event_processors)
-
     game.init()
     game.draw()
     game.quit()

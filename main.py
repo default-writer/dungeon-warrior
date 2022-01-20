@@ -5,6 +5,7 @@ from core.MouseProcessor import MouseProcessor, Mouse
 from core.KeyboardProcessor import KeyboardProcessor, Keyboard
 from core.Utils import debugger
 
+
 processors = [
     DateTimeProcessor(),
     DebugProcessor()]

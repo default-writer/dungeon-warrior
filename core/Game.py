@@ -1,5 +1,6 @@
 import os
 import pygame
+from pygame import Surface
 from typing import List
 
 from core.interfaces import IGameProcessor, IGameEventProcessor
@@ -22,7 +23,7 @@ class Game:
     def __init__(self, size: tuple[int, int] = (1920, 1080), processors: List[IGameProcessor] = None, event_processors: List[IGameEventProcessor] = None):
         self.event_processors: List[IGameEventProcessor] = event_processors
         self.processors: List[IGameProcessor] = processors
-        self.surface: pygame.Surface = pygame.display.set_mode(size, flags=pygame.NOFRAME, vsync=1)
+        self.surface: Surface = pygame.display.set_mode(size, flags=pygame.NOFRAME, vsync=1)
         self.painter:TextPainter = TextPainter()
 
 

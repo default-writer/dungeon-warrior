@@ -1,4 +1,5 @@
 import pygame
+from pygame import Surface
 from pygame.event import Event
 
 
@@ -16,4 +17,4 @@ class IGameProcessor:
 
 class ISurface:
     def __init__(self):
-        self.surface: pygame.Surface = None
+        self.surface: Surface = None

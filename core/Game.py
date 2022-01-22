@@ -2,25 +2,26 @@ import os
 import pygame
 from pygame import Surface
 from typing import List
-
+from core.Globals import TerminalSize, CellSize
 from core.interfaces import IGameProcessor, IGameEventProcessor
 from core.KeyboardProcessor import Keyboard
 from core.TextPainter import TextPainter
 from core.DebugProcessor import Debug
 from core.Utils import debugger
-
+from core.Globals import Caption, Fps
 
 pygame.init()
 pygame.font.init()
 
 
 class Game:
-    Fps = 60
-    Caption = "Dungeon Warrior"
     Icon = pygame.image.load(os.path.join("images", "dungeon.png"))
-    Font = pygame.font.Font(os.path.join("fonts", "pt-mono.ttf"), 64)
+    Font = pygame.font.Font(os.path.join("fonts", "SourceCodePro-Regular.ttf"), CellSize[1])
 
-    def __init__(self, size: tuple[int, int] = (1920, 1080), processors: List[IGameProcessor] = None, event_processors: List[IGameEventProcessor] = None):
+    def __init__(self,
+                 size: tuple[int, int] = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1]),
+                 processors: List[IGameProcessor] = None,
+                 event_processors: List[IGameEventProcessor] = None):
         self.event_processors: List[IGameEventProcessor] = event_processors
         self.processors: List[IGameProcessor] = processors
         self.surface: Surface = pygame.display.set_mode(size, flags=pygame.NOFRAME, vsync=1)
@@ -28,7 +29,7 @@ class Game:
 
 
     def init(self) -> None:
-        pygame.display.set_caption(Game.Caption)
+        pygame.display.set_caption(Caption)
         pygame.display.set_icon(Game.Icon)
         self.clock = pygame.time.Clock()
         print("Game started!")
@@ -37,7 +38,7 @@ class Game:
         pygame.quit()
         print("Game exited!")
 
-    @debugger(raise_exception=False)
+    @debugger(raise_exception=True)
     def draw(self) -> None:
         while True:
             for event in pygame.event.get():
@@ -52,6 +53,6 @@ class Game:
             self.surface.fill((0, 0, 0))
             self.painter.paint(Debug.text, self.surface, Game.Font)
 
-            self.clock.tick(Game.Fps)
+            self.clock.tick(Fps)
 
             pygame.display.flip()

@@ -1,0 +1,2 @@
+-r ./windows_requirements.txt
+pytest==6.2.5

@@ -1,4 +1,5 @@
 {
     "python.defaultInterpreterPath": "${env:PYTHON_ENV}",
     "files.trimTrailingWhitespace": true,
+    "editor.smoothScrolling": true,
 }

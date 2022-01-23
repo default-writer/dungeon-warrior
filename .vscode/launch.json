@@ -8,6 +8,7 @@
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
+            "cwd": "${workspaceFolder}/app",
             "module": "main",
             "python": "${command:python.interpreterPath}"
         }

@@ -1,9 +1,15 @@
+import sys
+import os
 from core.DateTimeProcessor import DateTimeProcessor
-from core.Debug import DebugProcessor, DemoProcessor
+from core.DebugProcessor import DebugProcessor
+from core.DemoProcessor import DemoProcessor
 from core.Game import Game
 from core.MouseProcessor import MouseProcessor
 from core.KeyboardProcessor import KeyboardProcessor
 from core.Utils import debugger
+
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
 
 
 processors = [

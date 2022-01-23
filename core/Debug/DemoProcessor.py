@@ -18,8 +18,7 @@ class DemoProcessor(IGameEventProcessor):
 
 
     def process(self):
-        if Debug.demo:
-            if self.ticks < DateTime.ticks:
-                self.text += alphabet[randrange(len(alphabet))]
-                self.ticks = DateTime.ticks
-                Debug.text = self.text
+        if Debug.demo and self.ticks < DateTime.ticks:
+            self.text += alphabet[randrange(len(alphabet))]
+            self.ticks = DateTime.ticks
+            Debug.text = self.text

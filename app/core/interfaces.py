@@ -4,7 +4,7 @@ from pygame.event import Event
 
 
 class IGameEventProcessor:
-    def process(self, event: Event):
+    def process(self, event: Event)->bool:
         '''interface-only function'''
         pass
 

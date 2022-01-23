@@ -2,6 +2,7 @@ import os
 import pygame
 from pygame import Surface
 from typing import List
+from core.MouseProcessor import Mouse
 from core.Globals import TerminalSize, CellSize
 from core.interfaces import IGameProcessor, IGameEventProcessor
 from core.KeyboardProcessor import Keyboard
@@ -19,9 +20,11 @@ class Game:
     Font = pygame.font.Font(os.path.join("fonts", "SourceCodePro-Regular.ttf"), CellSize[1])
 
     def __init__(self,
-                 size: tuple[int, int] = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1]),
-                 processors: List[IGameProcessor] = None,
-                 event_processors: List[IGameEventProcessor] = None):
+                 size: tuple[int, int], # = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1]),
+                 processors: List[IGameProcessor],
+                 event_processors: List[IGameEventProcessor],
+                 exit_processor: IGameEventProcessor):
+        self.exit_processor: IGameEventProcessor = exit_processor
         self.event_processors: List[IGameEventProcessor] = event_processors
         self.processors: List[IGameProcessor] = processors
         self.surface: Surface = pygame.display.set_mode(size, flags=pygame.NOFRAME, vsync=1)
@@ -42,7 +45,7 @@ class Game:
     def draw(self) -> None:
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or Keyboard.key == "Q":
+                if self.exit_processor.process(event):
                     return
                 for event_processor in self.event_processors:
                     event_processor.process(event)

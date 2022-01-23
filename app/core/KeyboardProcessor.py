@@ -9,7 +9,7 @@ class Keyboard:
 
 
 class KeyboardProcessor(IGameEventProcessor):
-    def process(self, event: Event = None):
+    def process(self, event: Event = None)->bool:
         if event:
             Keyboard.key = ""
 
@@ -36,4 +36,6 @@ class KeyboardProcessor(IGameEventProcessor):
             if keys[pygame.K_f]:
                 Keyboard.key = ""
                 Debug.demo = False
+            return True
+        return False
 

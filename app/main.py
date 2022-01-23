@@ -1,15 +1,15 @@
-import sys
-import os
+from core.Globals import TerminalSize, CellSize
 from core.DateTimeProcessor import DateTimeProcessor
 from core.DebugProcessor import DebugProcessor
 from core.DemoProcessor import DemoProcessor
 from core.Game import Game
 from core.MouseProcessor import MouseProcessor
 from core.KeyboardProcessor import KeyboardProcessor
+from core.ExitProcessor import ExitProcessor
 from core.Utils import debugger
 
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
+size = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1])
 
 
 processors = [
@@ -25,11 +25,16 @@ event_processors = [
     ]
 
 
+exit_processor = ExitProcessor()
+
+
 @debugger()
 def main():
     game: Game = Game(
+        size=size,
         processors=processors,
-        event_processors=event_processors)
+        event_processors=event_processors,
+        exit_processor=exit_processor)
     game.init()
     game.draw()
     game.quit()

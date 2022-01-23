@@ -19,4 +19,7 @@ class TextPainter:
                     if left < TerminalSize[0]:
                         surface.blit(text_surface, text_rect)
                         left += 1
+                    else:
+                        left = 0
+                        top += 1
                 top += 1

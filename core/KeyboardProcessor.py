@@ -1,7 +1,8 @@
 import pygame
 from pygame.event import Event
+from core.Debug import Debug
 from core.interfaces import IGameEventProcessor
-
+from core.Debug import Debug
 
 class Keyboard:
     key: str = ""
@@ -27,3 +28,12 @@ class KeyboardProcessor(IGameEventProcessor):
 
             if keys[pygame.K_q]:
                 Keyboard.key = "Q"
+
+            if keys[pygame.K_d]:
+                Keyboard.key = ""
+                Debug.demo = True
+
+            if keys[pygame.K_f]:
+                Keyboard.key = ""
+                Debug.demo = False
+

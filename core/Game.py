@@ -6,7 +6,7 @@ from core.Globals import TerminalSize, CellSize
 from core.interfaces import IGameProcessor, IGameEventProcessor
 from core.KeyboardProcessor import Keyboard
 from core.TextPainter import TextPainter
-from core.DebugProcessor import Debug
+from core.Debug.DebugProcessor import Debug
 from core.Utils import debugger
 from core.Globals import Caption, Fps
 

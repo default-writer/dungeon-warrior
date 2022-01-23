@@ -1,5 +1,5 @@
 from core.DateTimeProcessor import DateTimeProcessor
-from core.DebugProcessor import DebugProcessor
+from core.Debug import DebugProcessor, DemoProcessor
 from core.Game import Game
 from core.MouseProcessor import MouseProcessor
 from core.KeyboardProcessor import KeyboardProcessor
@@ -8,7 +8,8 @@ from core.Utils import debugger
 
 processors = [
     DateTimeProcessor(),
-    DebugProcessor()
+    DebugProcessor(),
+    DemoProcessor()
     ]
 
 

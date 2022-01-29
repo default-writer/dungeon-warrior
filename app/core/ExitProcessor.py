@@ -1,9 +1,10 @@
 import pygame
 from pygame.event import Event
+
+from core.Globals import TerminalSize
 from core.interfaces import IGameEventProcessor
 from core.KeyboardProcessor import Keyboard
 from core.MouseProcessor import Mouse
-from core.Globals import TerminalSize
 
 
 class ExitProcessor(IGameEventProcessor):

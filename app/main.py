@@ -1,13 +1,12 @@
-from core.Globals import TerminalSize, CellSize
 from core.DateTimeProcessor import DateTimeProcessor
 from core.DebugProcessor import DebugProcessor
 from core.DemoProcessor import DemoProcessor
-from core.Game import Game
-from core.MouseProcessor import MouseProcessor
-from core.KeyboardProcessor import KeyboardProcessor
 from core.ExitProcessor import ExitProcessor
+from core.Game import Game
+from core.Globals import CellSize, TerminalSize
+from core.KeyboardProcessor import KeyboardProcessor
+from core.MouseProcessor import MouseProcessor
 from core.Utils import debugger
-
 
 size = (TerminalSize[0] * CellSize[0], TerminalSize[1] * CellSize[1])
 

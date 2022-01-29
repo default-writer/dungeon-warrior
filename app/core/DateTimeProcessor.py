@@ -1,8 +1,9 @@
 import time
-import pygame
 from datetime import datetime, timedelta
-from core.interfaces import IGameEventProcessor
 
+import pygame
+
+from core.interfaces import IGameEventProcessor
 
 date_format = "%Y-%m-%d %H:%M:%S"
 

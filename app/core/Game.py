@@ -1,15 +1,16 @@
 import os
+from typing import List
+
 import pygame
 from pygame import Surface
-from typing import List
-from core.MouseProcessor import Mouse
-from core.Globals import TerminalSize, CellSize
-from core.interfaces import IGameProcessor, IGameEventProcessor
-from core.KeyboardProcessor import Keyboard
-from core.TextPainter import TextPainter
+
 from core.DebugProcessor import Debug
+from core.Globals import Caption, CellSize, Fps, TerminalSize
+from core.interfaces import IGameEventProcessor, IGameProcessor
+from core.KeyboardProcessor import Keyboard
+from core.MouseProcessor import Mouse
+from core.TextPainter import TextPainter
 from core.Utils import debugger
-from core.Globals import Caption, Fps
 
 pygame.init()
 pygame.font.init()

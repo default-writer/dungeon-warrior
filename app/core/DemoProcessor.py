@@ -1,7 +1,7 @@
-from core.interfaces import IGameEventProcessor
 from core.DateTimeProcessor import DateTime
-from core.Globals import TerminalSize
 from core.Debug import Debug
+from core.Globals import TerminalSize
+from core.interfaces import IGameEventProcessor
 
 
 class Demo:

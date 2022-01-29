@@ -1,8 +1,7 @@
 import pygame
+from core.Globals import CellSize, ScreenSize, TerminalSize, TextAntialiasing
 from pygame import Color, Surface
 from pygame.font import Font
-
-from core.Globals import CellSize, ScreenSize, TerminalSize, TextAntialiasing
 
 
 class Text:

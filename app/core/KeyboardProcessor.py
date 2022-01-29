@@ -1,8 +1,8 @@
 import pygame
+from core.interfaces import IGameEventProcessor
 from pygame.event import Event
 
 from core.Debug import Debug
-from core.interfaces import IGameEventProcessor
 
 
 class Keyboard:

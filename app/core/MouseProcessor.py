@@ -1,8 +1,7 @@
 import pygame
-from pygame.event import Event
-
 from core.Globals import CellSize
 from core.interfaces import IGameEventProcessor
+from pygame.event import Event
 
 
 class Mouse:

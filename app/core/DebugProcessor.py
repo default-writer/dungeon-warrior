@@ -1,11 +1,12 @@
 from random import randrange
 
 from core.DateTimeProcessor import DateTime
-from core.Debug import Debug
 from core.Globals import CellSize, TerminalSize
 from core.interfaces import IGameEventProcessor
 from core.KeyboardProcessor import Keyboard
 from core.MouseProcessor import Mouse
+
+from core.Debug import Debug
 
 
 class DebugProcessor(IGameEventProcessor):

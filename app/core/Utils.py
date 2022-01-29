@@ -14,5 +14,7 @@ def debugger(raise_exception=True):
                 print(str(ex))
                 if raise_exception:
                     raise ex
+
         return wrapper
+
     return decorator

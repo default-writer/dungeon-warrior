@@ -17,19 +17,26 @@ pygame.font.init()
 
 class Game:
     Icon = pygame.image.load(os.path.join("images", "dungeon.png"))
-    Font = pygame.font.Font(os.path.join("fonts", "SourceCodePro-Regular.ttf"), CellSize[1]-10)
+    Font = pygame.font.Font(
+        os.path.join("fonts", "SourceCodePro-Regular.ttf"), CellSize[1] - 10
+    )
 
-    def __init__(self,
-                 size: tuple[int, int], # = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1]),
-                 processors: List[IGameProcessor],
-                 event_processors: List[IGameEventProcessor],
-                 exit_processor: IGameEventProcessor):
+    def __init__(
+        self,
+        size: tuple[
+            int, int
+        ],  # = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1]),
+        processors: List[IGameProcessor],
+        event_processors: List[IGameEventProcessor],
+        exit_processor: IGameEventProcessor,
+    ):
         self.exit_processor: IGameEventProcessor = exit_processor
         self.event_processors: List[IGameEventProcessor] = event_processors
         self.processors: List[IGameProcessor] = processors
-        self.surface: Surface = pygame.display.set_mode(size, flags=pygame.NOFRAME, vsync=0)
-        self.painter:TextPainter = TextPainter(Game.Font)
-
+        self.surface: Surface = pygame.display.set_mode(
+            size, flags=pygame.NOFRAME, vsync=0
+        )
+        self.painter: TextPainter = TextPainter(Game.Font)
 
     def init(self) -> None:
         pygame.display.set_caption(Caption)

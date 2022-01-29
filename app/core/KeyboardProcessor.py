@@ -4,12 +4,13 @@ from core.Debug import Debug
 from core.interfaces import IGameEventProcessor
 from core.Debug import Debug
 
+
 class Keyboard:
     key: str = ""
 
 
 class KeyboardProcessor(IGameEventProcessor):
-    def process(self, event: Event = None)->bool:
+    def process(self, event: Event = None) -> bool:
         if event:
             Keyboard.key = ""
 
@@ -38,4 +39,3 @@ class KeyboardProcessor(IGameEventProcessor):
                 Debug.demo = False
             return True
         return False
-

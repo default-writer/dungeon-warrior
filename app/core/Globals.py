@@ -1,7 +1,7 @@
 Fps = 60
 Caption = "Dungeon Warrior"
-TerminalSize = (80, 24) # width = 1920 = 80*24, height = 1080 = 24*45
-CellSize = (24, 45) # width = 24, height = 45
+TerminalSize = (80, 24)  # width = 1920 = 80*24, height = 1080 = 24*45
+CellSize = (24, 45)  # width = 24, height = 45
 ScreenSize = (TerminalSize[0] * CellSize[0], TerminalSize[1] * CellSize[1])
 TextAntialiasing = True
 

@@ -21,7 +21,9 @@ class TextPainter:
             text_rect.left = Text.alphabet.index(ch) * CellSize[0]
             text_rect.width = CellSize[0]
             text_rect.height = CellSize[1]
-            text_rects.append((text_surface, text_rect, (0, 0, CellSize[0], CellSize[1])))
+            text_rects.append(
+                (text_surface, text_rect, (0, 0, CellSize[0], CellSize[1]))
+            )
         self.image.blits(text_rects)
 
     def paint(self, text: str, surface: Surface) -> None:
@@ -36,11 +38,22 @@ class TextPainter:
                     left = 0
                     top += 1
                 text_rect = surface.get_rect()
-                text_rect.top = top * CellSize[1]# - 13
+                text_rect.top = top * CellSize[1]  # - 13
                 text_rect.left = left * CellSize[0]
                 text_rect.width = CellSize[0]
                 text_rect.height = CellSize[1]
-                text_rects.append((self.image, text_rect, (Text.alphabet.index(ch) * CellSize[0], 0, CellSize[0], CellSize[1])))
+                text_rects.append(
+                    (
+                        self.image,
+                        text_rect,
+                        (
+                            Text.alphabet.index(ch) * CellSize[0],
+                            0,
+                            CellSize[0],
+                            CellSize[1],
+                        ),
+                    )
+                )
                 left += 1
             top += 1
 

@@ -3,6 +3,7 @@ from core.DateTimeProcessor import DateTime
 from core.Globals import TerminalSize
 from core.Debug import Debug
 
+
 class Demo:
     alphabet = "qwertyuiopasdfghjklzxcvbnm0123456789"
 
@@ -15,13 +16,12 @@ class DemoProcessor(IGameEventProcessor):
         self.text = ""
         self.state = 0
 
-
     def process(self):
-        if Debug.demo: #and self.ticks < DateTime.ticks:
+        if Debug.demo:  # and self.ticks < DateTime.ticks:
             # self.text += alphabet[randrange(len(alphabet))]
             self.text += Demo.alphabet[self.state]
-            #self.ticks = DateTime.ticks
+            # self.ticks = DateTime.ticks
             self.state += 1
             self.state %= len(Demo.alphabet)
-            self.text = self.text[-TerminalSize[0]*TerminalSize[1]:]
+            self.text = self.text[-TerminalSize[0] * TerminalSize[1] :]
             Debug.text = self.text

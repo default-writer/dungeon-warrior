@@ -3,6 +3,7 @@ from pygame.event import Event
 from core.interfaces import IGameEventProcessor
 from core.Globals import CellSize
 
+
 class Mouse:
     position: tuple[int, int] = (0, 0)
     coordinates: tuple[int, int] = (0, 0)
@@ -10,12 +11,15 @@ class Mouse:
 
 
 class MouseProcessor(IGameEventProcessor):
-    def process(self, event: Event = None)->bool:
+    def process(self, event: Event = None) -> bool:
         if event:
             if event.type == pygame.MOUSEMOTION:
                 mouse_pos = pygame.mouse.get_pos()
                 Mouse.position = mouse_pos
-                Mouse.coordinates = (Mouse.position[0] // CellSize[0], Mouse.position[1] // CellSize[1])
+                Mouse.coordinates = (
+                    Mouse.position[0] // CellSize[0],
+                    Mouse.position[1] // CellSize[1],
+                )
             if event.type == pygame.MOUSEBUTTONDOWN:
                 Mouse.button_down = True
             if event.type == pygame.MOUSEBUTTONUP:

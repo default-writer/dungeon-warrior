@@ -9,20 +9,13 @@ from core.ExitProcessor import ExitProcessor
 from core.Utils import debugger
 
 
-size = (TerminalSize[0]*CellSize[0], TerminalSize[1]*CellSize[1])
+size = (TerminalSize[0] * CellSize[0], TerminalSize[1] * CellSize[1])
 
 
-processors = [
-    DateTimeProcessor(),
-    DebugProcessor(),
-    DemoProcessor()
-    ]
+processors = [DateTimeProcessor(), DebugProcessor(), DemoProcessor()]
 
 
-event_processors = [
-    KeyboardProcessor(),
-    MouseProcessor()
-    ]
+event_processors = [KeyboardProcessor(), MouseProcessor()]
 
 
 exit_processor = ExitProcessor()
@@ -34,12 +27,13 @@ def main():
         size=size,
         processors=processors,
         event_processors=event_processors,
-        exit_processor=exit_processor)
+        exit_processor=exit_processor,
+    )
     game.init()
     game.draw()
     game.quit()
 
 
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -23,5 +23,5 @@ class DemoProcessor(IGameEventProcessor):
             # self.ticks = DateTime.ticks
             self.state += 1
             self.state %= len(Demo.alphabet)
-            self.text = self.text[-TerminalSize[0] * TerminalSize[1] :]
+            self.text = self.text[-TerminalSize[0] * TerminalSize[1]:]
             Debug.text = self.text

@@ -11,7 +11,8 @@ class Text:
 
 class TextPainter:
     def __init__(self, font: Font):
-        self.image = pygame.Surface((len(Text.alphabet) * CellSize[0], CellSize[1]))
+        self.image = pygame.Surface(
+            (len(Text.alphabet) * CellSize[0], CellSize[1]))
         self.image = self.image.convert()
         self.rect = self.image.get_rect()
         text_rects = []
